@@ -26,8 +26,6 @@ object spec extends Specification with Mockito {
     val output = mock[OutputCollector[Text, IntWritable]]
     mapper.map(null, value, output, null)
 
-    val outputKey = anyObject()
-    val outputValue = anyObject()
-    there was no(output).collect(outputKey, outputValue)
-  }    
+    there was no(output).collect(anyObject(), anyObject())
+  }
 }
