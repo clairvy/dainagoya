@@ -1,0 +1,1 @@
+(:server-root (expand-file-name ".emacs.d/ensime/dist/" (getenv "HOME")) :project-package "" :use-sbt t)
