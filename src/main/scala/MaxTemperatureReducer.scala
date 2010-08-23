@@ -3,15 +3,11 @@ import org.apache.hadoop.mapred.MapReduceBase
 import org.apache.hadoop.mapred.Reducer
 import org.apache.hadoop.mapred.OutputCollector
 import org.apache.hadoop.mapred.Reporter
-import java.util._
+import scala.collection.JavaConversions._
 
 class MaxTemperatureReducer extends MapReduceBase with Reducer[Text, IntWritable, Text, IntWritable] {
-  def reduce(key : Text, values : Iterator[IntWritable], output : OutputCollector[Text, IntWritable], reporter : Reporter) {
-    var maxValue = Integer.MIN_VALUE
-
-    while (values.hasNext) {
-      maxValue = Math.max(maxValue, values.next.get)
-    }
+  def reduce(key : Text, values : java.util.Iterator[IntWritable], output : OutputCollector[Text, IntWritable], reporter : Reporter) {
+    val maxValue = values./:(Integer.MIN_VALUE)((i,v) => Math.max(i, v.get))
     output.collect(key, new IntWritable(maxValue))
   }
 }
