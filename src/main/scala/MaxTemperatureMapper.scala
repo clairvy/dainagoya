@@ -1,9 +1,10 @@
-import org.apache.hadoop.mapreduce._
 import org.apache.hadoop.io._
+import org.apache.hadoop.mapred.MapReduceBase
+import org.apache.hadoop.mapred.Mapper
 import org.apache.hadoop.mapred.OutputCollector
 import org.apache.hadoop.mapred.Reporter
 
-class MaxTemperatureMapper extends Mapper[LongWritable, Text, Text, IntWritable] {
+class MaxTemperatureMapper extends MapReduceBase with Mapper[LongWritable, Text, Text, IntWritable] {
   def map (key : LongWritable, value : Text, output : OutputCollector[Text, IntWritable], reporter : Reporter) {
     def missing(temp : String) : Boolean = temp.equals("+9999")
 

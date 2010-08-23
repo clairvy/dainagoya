@@ -6,6 +6,8 @@ import org.apache.hadoop.io._
 import org.apache.hadoop.mapreduce._
 import org.apache.hadoop.mapred.OutputCollector
 
+import java.util._
+
 object spec extends Specification with Mockito {
   "process valid record" in {
     val mapper = new MaxTemperatureMapper
@@ -27,5 +29,19 @@ object spec extends Specification with Mockito {
     mapper.map(null, value, output, null)
 
     there was no(output).collect(anyObject(), anyObject())
+  }
+
+  "returns maximum integer in values" in {
+    val reducer = new MaxTemperatureReducer
+
+    val key = new Text("1950")
+
+    val values = Arrays.asList(
+      new IntWritable(10), new IntWritable(5)).iterator
+    val output = mock[OutputCollector[Text, IntWritable]]
+
+    reducer.reduce(key, values, output, null)
+
+    there was one(output).collect(key, new IntWritable(10))
   }
 }
