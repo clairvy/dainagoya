@@ -5,3 +5,4 @@
 $ sbt test
 
 とかでいい筈
+(もしかして sbt update も必要かも)
